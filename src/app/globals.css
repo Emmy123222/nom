@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --foreground-rgb: 255, 255, 255;
@@ -8,46 +10,50 @@
   --neon-pink: #FF0080;
   --neon-blue: #00D4FF;
   --cyber-purple: #8B00FF;
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 5% 6%;
-  --popover-foreground: 0 0% 98%;
+  
+  /* Design system colors */
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
   --primary: 142 76% 36%;
-  --primary-foreground: 240 10% 3.9%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
   --ring: 142 76% 36%;
   --radius: 0.75rem;
-  --radius-lg: 0.75rem;
-  --radius-md: calc(0.75rem - 2px);
-  --radius-sm: calc(0.75rem - 4px);
-  --chart-1: 142 76% 36%;
-  --chart-2: 240 3.7% 15.9%;
-  --chart-3: 0 62.8% 30.6%;
-  --chart-4: 240 5% 64.9%;
-  --chart-5: 0 0% 98%;
 }
 
 @layer base {
   * {
-    border-color: hsl(var(--border));
+    @apply border-border;
   }
   
   body {
+    @apply bg-background text-foreground;
     background-image: linear-gradient(to bottom right, #1a202c, #2a1a3c, #2a1a4c);
-    color: hsl(var(--foreground));
     background-attachment: fixed;
     min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(45deg, #00FF41, #00D4FF, #FF0080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
   
   .glass {
@@ -76,36 +82,6 @@
     background-size: 50px 50px;
   }
   
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  .animate-pulse-slow {
-    animation: pulse 3s infinite;
-  }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-  
-  @keyframes accordion-down {
-    from { height: 0; }
-    to { height: var(--radix-accordion-content-height); }
-  }
-  
-  @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height); }
-    to { height: 0; }
-  }
-  
-  .text-gradient {
-    background: linear-gradient(45deg, #00FF41, #00D4FF, #FF0080);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
   .particles {
     position: fixed;
     top: 0;
@@ -124,53 +100,13 @@
     border-radius: 50%;
     animation: particle-float 10s infinite linear;
   }
-  
-  @keyframes particle-float {
-    0% {
-      transform: translateY(100vh) rotate(0deg);
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100px) rotate(360deg);
-      opacity: 0;
-    }
-  }
-}
-
-@layer utilities {
-  .bg-gradient-radial {
-    background-image: radial-gradient(var(--tw-gradient-stops));
-  }
-  
-  .bg-gradient-conic {
-    background-image: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
-  }
-  
-  .animate-accordion-down {
-    animation: accordion-down 0.2s ease-out;
-  }
-  
-  .animate-accordion-up {
-    animation: accordion-up 0.2s ease-out;
-  }
 }
 
 @layer components {
   .btn-cyber {
-    position: relative;
+    @apply relative overflow-hidden font-semibold px-6 py-3 rounded-lg transition-all duration-300;
     background-image: linear-gradient(to right, #06b6d4, #7c3aed);
     color: white;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    transition: all 300ms;
   }
   
   .btn-cyber:hover {
@@ -198,14 +134,72 @@
   }
   
   .chat-bubble.user {
-    margin-left: auto;
+    @apply ml-auto;
     background-image: linear-gradient(to right, rgba(6, 182, 212, 0.2), rgba(124, 58, 237, 0.2));
     border-color: rgba(52, 211, 255, 0.3);
   }
   
   .chat-bubble.ai {
-    margin-right: auto;
+    @apply mr-auto;
     background-image: linear-gradient(to right, rgba(34, 197, 94, 0.2), rgba(37, 99, 235, 0.2));
     border-color: rgba(34, 197, 94, 0.3);
   }
+}
+
+/* Wallet adapter styles override */
+.wallet-adapter-button {
+  @apply !bg-gradient-to-r !from-cyan-500 !to-purple-600 !rounded-lg !font-semibold !transition-all !duration-300;
+}
+
+.wallet-adapter-button:hover {
+  @apply !shadow-lg;
+  box-shadow: 0 0 15px rgba(52, 211, 255, 0.3) !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  @apply !bg-black/80;
+}
+
+.wallet-adapter-modal {
+  @apply !bg-gray-900 !border !border-white/10;
+  backdrop-filter: blur(12px);
+}
+
+.wallet-adapter-modal-title {
+  @apply !text-white;
+}
+
+.wallet-adapter-modal-list {
+  @apply !bg-transparent;
+}
+
+.wallet-adapter-modal-list-more {
+  @apply !bg-gray-800/50 !border-white/10;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(52, 211, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(52, 211, 255, 0.5);
+}
+
+/* Line clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
